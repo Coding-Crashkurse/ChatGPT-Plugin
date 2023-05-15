@@ -2,9 +2,9 @@
 
 In this repo you will find a plugin for ChatGPT based on a REST API with FastAPI.
 
-## Warning
+## Prerequisites
 
-You need an OpenAI API_KEY to run that project. It has to be placed inside the `.env` file
+You need an OpenAI API_KEY to run that project. You also need Access to the ChatGPT Plugins. It has to be placed inside the `.env` file
 
 ## App Endpoints
 
