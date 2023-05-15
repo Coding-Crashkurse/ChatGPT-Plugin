@@ -2,6 +2,10 @@
 
 In this repo you will find a plugin for ChatGPT based on a REST API with FastAPI.
 
+## Warning
+
+You need an OpenAI API_KEY to run that project. It has to be placed inside the `.env` file
+
 ## App Endpoints
 
 The following four endpoints describe the core functionality of the app, typical REST endpoints. where you can add books to a list, update, delete and view them all.
@@ -37,4 +41,4 @@ This endpoint returns the plugin manifest as a JSON file.
 ### `GET /openapi.yaml`
 
 This endpoint returns the application's OpenAPI specification as a YAML file.
-"# ChatGPT-Plugin" 
+"# ChatGPT-Plugin"
