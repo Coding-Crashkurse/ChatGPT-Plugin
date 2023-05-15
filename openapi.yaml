@@ -1,0 +1,142 @@
+openapi: 3.0.1
+info:
+  title: Book Club Plugin
+  description: A plugin that allows the user to create and manage a book list using ChatGPT. If you do not know the user's username, ask them first before making queries to the plugin. Otherwise, use the username "global".
+  version: "v1"
+servers:
+  - url: http://localhost:4444
+
+paths:
+  /books/{username}/{book_title}:
+    put:
+      operationId: updateBook
+      summary: Update a book's review
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+        - in: path
+          name: book_title
+          schema:
+            type: string
+          required: true
+          description: The title of the book to update.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateBookRequest"
+      responses:
+        "200":
+          description: OK
+  /books/{username}:
+    get:
+      operationId: getBooks
+      summary: Get the list of books
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getBooksResponse"
+    post:
+      operationId: addBook
+      summary: Add a book to the list
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addBookRequest"
+      responses:
+        "200":
+          description: OK
+    delete:
+      operationId: deleteBook
+      summary: Delete a book from the list
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteBookRequest"
+      responses:
+        "200":
+          description: OK
+
+components:
+  schemas:
+    updateBookRequest:
+      type: object
+      properties:
+        review:
+          type: string
+          description: The new review of the book.
+          required: false
+    getBooksResponse:
+      type: object
+      properties:
+        books:
+          type: array
+          items:
+            $ref: "#/components/schemas/BookItem"
+          description: The list of books.
+    addBookRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: The title of the book to add to the list.
+          required: true
+        review:
+          type: string
+          description: The review of the book.
+          required: false
+    deleteBookRequest:
+      type: object
+      required:
+        - book_idx
+      properties:
+        book_idx:
+          type: integer
+          description: The index of the book to delete.
+          required: true
+    BookItem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the book.
+          required: true
+        review:
+          type: string
+          description: The review of the book.
+          required: false

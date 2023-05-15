@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Book Club Plugin (no auth)",
+  "name_for_model": "bookclub",
+  "description_for_human": "Plugin for managing a Book Club list, you can add, remove, update and view your books.",
+  "description_for_model": "Plugin for managing a Book Club list, you can add, remove, update and view your books.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "http://localhost:4444/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "http://localhost:4444/logo.png",
+  "contact_email": "legal@example.com",
+  "legal_info_url": "http://example.com/legal"
+}
