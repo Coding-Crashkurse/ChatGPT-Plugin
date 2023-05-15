@@ -26,7 +26,7 @@ This endpoint deletes a book from a user's list. It expects a path parameter `us
 
 This endpoint updates the rating of a book in a user's list. It expects two path parameters: `username` and `book_title`, and optionally a request body containing the new rating.
 
-# Plugin endpoints
+## Plugin endpoints
 
 These endpoints are needed to deliver the API as a plugin.
 
