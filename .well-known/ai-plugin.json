@@ -1,9 +1,9 @@
 {
   "schema_version": "v1",
-  "name_for_human": "Book Club Plugin (no auth)",
-  "name_for_model": "bookclub",
-  "description_for_human": "Plugin for managing a Book Club list, you can add, remove, update and view your books.",
-  "description_for_model": "Plugin for managing a Book Club list, you can add, remove, update and view your books.",
+  "name_for_human": "ChatGPT Plugin (no auth)",
+  "name_for_model": "chatgpt",
+  "description_for_human": "Take care of your Huninchens - a not existing animal to demonstate the power of vector DBs",
+  "description_for_model": "Plugin for retrievel of helpful information about Huninchens from a vector DB",
   "auth": {
     "type": "none"
   },

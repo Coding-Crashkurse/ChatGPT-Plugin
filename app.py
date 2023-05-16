@@ -1,13 +1,21 @@
-from typing import List, Optional
-
+import os
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from ingest import DocumentIngestor
+from langchain.chains import ConversationalRetrievalChain
+from langchain.memory import ConversationBufferMemory
+from langchain.llms import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
-_BOOKS = {}
+ingestor = DocumentIngestor()
+vectorstore = ingestor.get_vectorstore()
+memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True, output_key='answer')
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,42 +26,19 @@ app.add_middleware(
 )
 
 
-class BookItem(BaseModel):
-    title: str
-    review: Optional[str] = None
+class Message(BaseModel):
+    query: str
 
 
-@app.post("/books/{username}")
-async def add_book(username: str, book_item: BookItem):
-    if username not in _BOOKS:
-        _BOOKS[username] = []
-    _BOOKS[username].append(book_item.dict())
-    return {"status": "OK"}
-
-
-@app.get("/books/{username}", response_model=List[BookItem])
-async def get_books(username: str):
-    return _BOOKS.get(username, [])
-
-
-@app.delete("/books/{username}")
-async def delete_book(username: str, book_index: int):
-    try:
-        _BOOKS.get(username).pop(book_index)
-        return {"status": "OK"}
-    except (AttributeError, IndexError):
-        return {"status": "book not found"}
-
-
-@app.put("/books/{username}/{book_title}")
-async def update_book(username: str, book_title: str, review: Optional[str] = None):
-    if username in _BOOKS:
-        for book in _BOOKS[username]:
-            if book["title"] == book_title:
-                book["review"] = review
-                return {"status": "OK"}
-    return {"status": "Book not found"}
-
+@app.post("/chat")
+async def chat(message: Message):
+    qa = ConversationalRetrievalChain.from_llm(
+    llm=OpenAI(model_name="text-davinci-003", temperature=0, openai_api_key=os.environ.get("API_KEY")),
+    memory=memory,
+    retriever=vectorstore.as_retriever(),
+)
+    result = qa({"question": message.query})
+    return result["answer"]
 
 @app.get("/logo.png")
 async def plugin_logo():
