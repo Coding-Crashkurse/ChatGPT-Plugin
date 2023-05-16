@@ -1,10 +1,24 @@
 # ChatGPT Conversational Retrieval Plugin - FastAPI API
 
-In this repo, you will find a plugin for ChatGPT based on a REST API with FastAPI.
+This repository contains a plugin for ChatGPT based on a REST API with FastAPI. The application is containerized using Docker and orchestrated with Docker Compose. Traffic is managed by an NGINX reverse proxy.
 
 ## Prerequisites
 
-You need an OpenAI API_KEY to run this project. You also need access to the ChatGPT Plugins. It has to be placed inside the `.env` file.
+You need an OpenAI API_KEY to run this project. You also need access to the ChatGPT Plugins. These should be set as environment variables in the `docker-compose.yml` file.
+
+## Docker and Docker Compose
+
+To run this project, you need Docker and Docker Compose installed on your machine.
+
+You can build and start the services using the following command:
+
+```bash
+docker-compose up --build
+```
+
+# Nginx
+
+We use NGINX as a reverse proxy to route traffic to our FastAPI application. The configuration for NGINX is found in the `nginx.conf` file.
 
 ## App Endpoints
 

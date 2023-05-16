@@ -4,7 +4,7 @@ info:
   description: A plugin that allows the user to interact with a conversational retrieval model using ChatGPT.
   version: "v1"
 servers:
-  - url: http://localhost:4444
+  - url: https://coding-crashkurse.com
 
 paths:
   /chat:
