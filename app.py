@@ -58,3 +58,4 @@ async def openapi_spec():
     with open("openapi.yaml") as f:
         text = f.read()
         return Response(text, media_type="text/yaml")
+
